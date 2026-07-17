@@ -19,7 +19,7 @@
       "type": "short-answer",
       "choices": [],
       "answer": "Custard",
-      "timeLimit": 30,
+      "timeLimit": null,
       "points": 10
     },
     {
@@ -28,7 +28,7 @@
       "type": "short-answer",
       "choices": [],
       "answer": "David and Victoria",
-      "timeLimit": 30,
+      "timeLimit": null,
       "points": 10,
       "chat": {
         "title": "Hugo Family • iMessage",
@@ -51,7 +51,7 @@
         "Tino Martinez"
       ],
       "answer": "Mike Mussina",
-      "timeLimit": 30,
+      "timeLimit": null,
       "points": 10,
       "notes": "Mussina was on the Baltimore Orioles in 2000; he signed with the Yankees in December 2000 and pitched in the 2001 World Series."
     },
@@ -61,7 +61,7 @@
       "type": "short-answer",
       "choices": [],
       "answer": "Softball bats (and gear)",
-      "timeLimit": 30,
+      "timeLimit": null,
       "points": 10,
       "notes": "DeMarini and Easton make bats; Kraken sells bats; Lizard Skins is best known for bat grip tape — accept 'softball bats', 'bats', or 'softball equipment'."
     },
@@ -72,10 +72,10 @@
       "category": "Cousins",
       "choices": [],
       "answer": "10",
-      "timeLimit": 20,
+      "timeLimit": 10,
       "points": 10,
       "reveal": true,
-      "notes": "Hidden behind a Start button; the 20s timer begins when the host reveals the question."
+      "notes": "Hidden behind a Start button; the 10s timer begins when the host reveals the question."
     },
     {
       "id": 7,
@@ -83,7 +83,7 @@
       "type": "short-answer",
       "choices": [],
       "answer": "Windows",
-      "timeLimit": 30,
+      "timeLimit": null,
       "points": 10
     },
     {
@@ -92,7 +92,7 @@
       "type": "short-answer",
       "choices": [],
       "answer": "Sign language interpreter",
-      "timeLimit": 30,
+      "timeLimit": null,
       "points": 10,
       "notes": "Classifiers and role shifting are ASL grammatical/storytelling techniques — accept 'sign language interpreter', 'ASL interpreter', or 'signer'."
     }
