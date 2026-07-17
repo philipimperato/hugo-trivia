@@ -1,0 +1,100 @@
+{
+  "game": "Hugo Family Trivia Night",
+  "source": "trivia-night.html",
+  "note": "Mirrors the `questions` array in trivia-night.html. Keep both in sync when editing.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "1 + 1",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "2",
+      "timeLimit": null,
+      "points": 0,
+      "notes": "Warm-up question — used to explain the rules and question-distribution criteria."
+    },
+    {
+      "id": 2,
+      "text": "What is Bandit Heeler's middle name?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Custard",
+      "timeLimit": 30,
+      "points": 10
+    },
+    {
+      "id": 3,
+      "text": "Who's most likely sending this exchange in the family chat?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "David and Victoria",
+      "timeLimit": 30,
+      "points": 10,
+      "chat": {
+        "title": "Hugo Family • iMessage",
+        "messages": [
+          { "from": "them", "text": "Lmao!!" },
+          { "from": "me", "text": "🖕", "bigEmoji": true }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "text": "Which player did not play in the 2000 Subway Series?",
+      "type": "multiple-choice",
+      "choices": [
+        "Derek Jeter",
+        "Mike Mussina",
+        "Mike Piazza",
+        "Paul O'Neill",
+        "Al Leiter",
+        "Tino Martinez"
+      ],
+      "answer": "Mike Mussina",
+      "timeLimit": 30,
+      "points": 10,
+      "notes": "Mussina was on the Baltimore Orioles in 2000; he signed with the Yankees in December 2000 and pitched in the 2001 World Series."
+    },
+    {
+      "id": 5,
+      "text": "DeMarini, Easton, Kraken, Lizard Skins — these are all companies that sell what?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Softball bats (and gear)",
+      "timeLimit": 30,
+      "points": 10,
+      "notes": "DeMarini and Easton make bats; Kraken sells bats; Lizard Skins is best known for bat grip tape — accept 'softball bats', 'bats', or 'softball equipment'."
+    },
+    {
+      "id": 6,
+      "text": "How many cousins are older than Sophia?",
+      "type": "short-answer",
+      "category": "Cousins",
+      "choices": [],
+      "answer": "10",
+      "timeLimit": 20,
+      "points": 10,
+      "reveal": true,
+      "notes": "Hidden behind a Start button; the 20s timer begins when the host reveals the question."
+    },
+    {
+      "id": 7,
+      "text": "Jalousie, Casement, Awning, Double-hung — these are all a type of what?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Windows",
+      "timeLimit": 30,
+      "points": 10
+    },
+    {
+      "id": 8,
+      "text": "What profession uses classifiers and role shifting?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Sign language interpreter",
+      "timeLimit": 30,
+      "points": 10,
+      "notes": "Classifiers and role shifting are ASL grammatical/storytelling techniques — accept 'sign language interpreter', 'ASL interpreter', or 'signer'."
+    }
+  ]
+}

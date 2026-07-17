@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Trivia Night</title>
+<style>
+  :root {
+    --ink: #1b2431;        /* deep slate night */
+    --ink-soft: #2a3547;
+    --paper: #f6f2e8;      /* card stock */
+    --gold: #e8b23a;       /* game-show marquee gold */
+    --gold-deep: #b8860b;
+    --accent: #5aa9a3;     /* teal counter chip */
+    --muted: #8b93a3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: var(--ink);
+    background-image: radial-gradient(ellipse 80% 60% at 50% -10%, #2e3c55 0%, var(--ink) 65%);
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .marquee {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+  .marquee::before, .marquee::after { content: "✦"; margin: 0 0.75em; opacity: 0.6; }
+
+  .card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 14px;
+    padding: 3rem 2.5rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 0 0 6px rgba(232,178,58,0.18);
+    text-align: center;
+  }
+
+  .counter-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .counter, .timer {
+    display: inline-block;
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    padding: 0.4em 1.1em;
+    border-radius: 999px;
+  }
+  .counter { background: var(--accent); }
+  .timer { background: var(--ink-soft); color: var(--gold); display: none; }
+  .timer.low { background: #a3423e; color: var(--paper); }
+
+  .question {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    line-height: 1.15;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    min-height: 1.2em;
+  }
+
+  .choices {
+    display: none;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+  }
+  .choices.visible { display: flex; }
+
+  .category {
+    display: none;
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: -1rem 0 2rem;
+  }
+  .category.visible { display: block; }
+
+  .chat {
+    display: none;
+    width: 280px;
+    margin: 0 auto 1.5rem;
+    padding: 14px 12px;
+    background: #fff;
+    border: 1px solid #d9d4c5;
+    border-radius: 22px;
+    text-align: left;
+    font-family: -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .chat.visible { display: flex; }
+  .chat-header {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #8b93a3;
+    margin-bottom: 4px;
+  }
+  .bubble {
+    max-width: 75%;
+    padding: 8px 12px;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .bubble.them {
+    align-self: flex-start;
+    background: #e9e9eb;
+    border-radius: 18px 18px 18px 4px;
+  }
+  .bubble.me {
+    align-self: flex-end;
+    background: #2f9bfa;
+    color: #fff;
+    border-radius: 18px 18px 4px 18px;
+  }
+  .bubble.big-emoji {
+    font-size: 2.5rem;
+    line-height: 1;
+    padding: 10px 14px;
+  }
+  .choice {
+    font-size: 1.1rem;
+    padding: 0.6em 1em;
+    border-radius: 8px;
+    background: var(--ink-soft);
+    color: var(--paper);
+  }
+
+  .next-btn {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    background: var(--gold);
+    border: none;
+    border-bottom: 4px solid var(--gold-deep);
+    border-radius: 10px;
+    padding: 0.9em 3em;
+    cursor: pointer;
+    transition: transform 0.08s ease, filter 0.15s ease;
+  }
+  .next-btn:hover { filter: brightness(1.07); }
+  .next-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+  .next-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .next-btn:disabled { opacity: 0.4; cursor: default; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .next-btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="marquee">Hugo Family Trivia Night</div>
+
+  <div class="card">
+    <div class="counter-row">
+      <div class="counter" id="counter"></div>
+      <div class="timer" id="timer"></div>
+    </div>
+    <div class="question" id="question"></div>
+    <div class="category" id="category"></div>
+    <div class="chat" id="chat"></div>
+    <div class="choices" id="choices"></div>
+    <button class="next-btn" id="startBtn" style="display: none;">Start</button>
+    <button class="next-btn" id="nextBtn">Next Question</button>
+  </div>
+
+<script>
+  // ------------------------------------------------------------
+  // QUESTION SET — edit this array only. Everything else adapts.
+  //
+  // Each question is an object:
+  //   text       (string, required)  the question as displayed
+  //   type       ("short-answer" | "multiple-choice" | "true-false")
+  //              defaults to "short-answer" if omitted
+  //   choices    (string[])          shown only for multiple-choice /
+  //              true-false; omit for short-answer
+  //   answer     (string)            correct answer, host-only — never
+  //              rendered on this screen, kept for the admin/answer key
+  //   timeLimit  (number seconds | null)  countdown shown to players;
+  //              null/omitted = no timer
+  //   points     (number)            defaults to 10 if omitted
+  //   category   (string)            topic label; shown as a chip on the
+  //              "Ready?" screen for reveal questions
+  //   reveal     (boolean)           hide the question behind a Start
+  //              button; clicking it reveals the question and starts
+  //              the timer
+  //   chat       ({title, messages: [{from: "them"|"me",
+  //              text, bigEmoji?}]})  optional iMessage-style mockup
+  //              rendered below the question text
+  //
+  // This array is mirrored in trivia-answers.json for the admin view.
+  // Keep the two in sync when you add/edit/remove questions.
+  // ------------------------------------------------------------
+  const questions = [
+    {
+      text: "1 + 1",
+      type: "short-answer",
+      answer: "2",
+      timeLimit: null,
+      points: 0
+    },
+    {
+      text: "What is Bandit Heeler's middle name?",
+      type: "short-answer",
+      answer: "Custard",
+      timeLimit: 30,
+      points: 10
+    },
+    {
+      text: "Who's most likely sending this exchange in the family chat?",
+      type: "short-answer",
+      answer: "David and Victoria",
+      timeLimit: 30,
+      points: 10,
+      chat: {
+        title: "Hugo Family • iMessage",
+        messages: [
+          { from: "them", text: "Lmao!!" },
+          { from: "me", text: "🖕", bigEmoji: true },
+        ]
+      }
+    },
+    {
+      text: "Which player did not play in the 2000 Subway Series?",
+      type: "multiple-choice",
+      choices: [
+        "Derek Jeter",
+        "Mike Mussina",
+        "Mike Piazza",
+        "Paul O'Neill",
+        "Al Leiter",
+        "Tino Martinez",
+      ],
+      answer: "Mike Mussina",
+      timeLimit: 30,
+      points: 10
+    },
+    {
+      text: "DeMarini, Easton, Kraken, Lizard Skins — these are all companies that sell what?",
+      type: "short-answer",
+      answer: "Softball bats (and gear)",
+      timeLimit: 30,
+      points: 10
+    },
+    {
+      text: "How many cousins are older than Sophia?",
+      type: "short-answer",
+      category: "Cousins",
+      answer: "10",
+      timeLimit: 20,
+      points: 10,
+      reveal: true
+    },
+    {
+      text: "Jalousie, Casement, Awning, Double-hung — these are all a type of what?",
+      type: "short-answer",
+      answer: "Windows",
+      timeLimit: 30,
+      points: 10
+    },
+    {
+      text: "What profession uses classifiers and role shifting?",
+      type: "short-answer",
+      answer: "Sign language interpreter",
+      timeLimit: 30,
+      points: 10
+    },
+  ];
+
+  const counterEl  = document.getElementById("counter");
+  const questionEl = document.getElementById("question");
+  const categoryEl = document.getElementById("category");
+  const chatEl     = document.getElementById("chat");
+  const choicesEl  = document.getElementById("choices");
+  const timerEl    = document.getElementById("timer");
+  const startBtn   = document.getElementById("startBtn");
+  const nextBtn    = document.getElementById("nextBtn");
+
+  // survive an accidental refresh via URL hash (#q2 etc.)
+  let index = Math.min(
+    Math.max(parseInt(location.hash.replace("#q", ""), 10) - 1 || 0, 0),
+    questions.length - 1
+  );
+
+  let timerId = null;
+
+  function stopTimer() {
+    if (timerId) { clearInterval(timerId); timerId = null; }
+    timerEl.style.display = "none";
+    timerEl.classList.remove("low");
+  }
+
+  function startTimer(seconds) {
+    let remaining = seconds;
+    timerEl.style.display = "inline-block";
+    timerEl.textContent = `${remaining}s`;
+    timerEl.classList.toggle("low", remaining <= 10);
+    timerId = setInterval(() => {
+      remaining--;
+      timerEl.textContent = `${Math.max(remaining, 0)}s`;
+      timerEl.classList.toggle("low", remaining <= 10);
+      if (remaining <= 0) clearInterval(timerId);
+    }, 1000);
+  }
+
+  let revealed = false;
+
+  function render() {
+    stopTimer();
+    const q = questions[index];
+    const hidden = q.reveal && !revealed;
+
+    counterEl.textContent = `Question ${index + 1} of ${questions.length}`;
+    startBtn.style.display = hidden ? "" : "none";
+    nextBtn.style.display = hidden ? "none" : "";
+
+    if (hidden) {
+      questionEl.textContent = "Ready?";
+      questionEl.style.fontSize = "";
+      if (q.category) {
+        categoryEl.textContent = q.category;
+        categoryEl.classList.add("visible");
+      } else {
+        categoryEl.classList.remove("visible");
+      }
+      chatEl.classList.remove("visible");
+      choicesEl.classList.remove("visible");
+      choicesEl.innerHTML = "";
+      location.hash = "q" + (index + 1);
+      return;
+    }
+
+    questionEl.textContent = q.text;
+    categoryEl.classList.remove("visible");
+
+    chatEl.innerHTML = "";
+    if (q.chat) {
+      if (q.chat.title) {
+        const header = document.createElement("div");
+        header.className = "chat-header";
+        header.textContent = q.chat.title;
+        chatEl.appendChild(header);
+      }
+      q.chat.messages.forEach((m) => {
+        const bubble = document.createElement("div");
+        bubble.className = `bubble ${m.from === "me" ? "me" : "them"}${m.bigEmoji ? " big-emoji" : ""}`;
+        bubble.textContent = m.text;
+        chatEl.appendChild(bubble);
+      });
+      chatEl.classList.add("visible");
+    } else {
+      chatEl.classList.remove("visible");
+    }
+
+    // shrink the question when extra content (chat mockup, choices) shares the card
+    const hasExtras = !!q.chat || q.type === "multiple-choice" || q.type === "true-false";
+    questionEl.style.fontSize = hasExtras ? "clamp(1.6rem, 5vw, 2.5rem)" : "";
+
+    if (q.type === "multiple-choice" || q.type === "true-false") {
+      const choices = q.choices && q.choices.length ? q.choices : ["True", "False"];
+      choicesEl.innerHTML = "";
+      choices.forEach((choice, i) => {
+        const div = document.createElement("div");
+        div.className = "choice";
+        div.textContent = `${String.fromCharCode(65 + i)}. ${choice}`;
+        choicesEl.appendChild(div);
+      });
+      choicesEl.classList.add("visible");
+    } else {
+      choicesEl.classList.remove("visible");
+      choicesEl.innerHTML = "";
+    }
+
+    if (q.timeLimit) startTimer(q.timeLimit);
+
+    location.hash = "q" + (index + 1);
+    if (index === questions.length - 1) {
+      nextBtn.textContent = "That's the game!";
+      nextBtn.disabled = true;
+    } else {
+      nextBtn.textContent = "Next Question";
+      nextBtn.disabled = false;
+    }
+  }
+
+  function next() {
+    if (index < questions.length - 1) { index++; revealed = false; render(); }
+  }
+
+  function reveal() {
+    revealed = true;
+    render();
+  }
+
+  nextBtn.addEventListener("click", next);
+  startBtn.addEventListener("click", reveal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === " ") {
+      e.preventDefault();
+      if (questions[index].reveal && !revealed) reveal();
+      else next();
+    }
+  });
+
+  render();
+</script>
+</body>
+</html>
