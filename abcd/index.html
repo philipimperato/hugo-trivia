@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Host Answer Key</title>
+<style>
+  :root {
+    --ink: #1b2431;
+    --ink-soft: #2a3547;
+    --paper: #f6f2e8;
+    --gold: #e8b23a;
+    --gold-deep: #b8860b;
+    --accent: #5aa9a3;
+    --muted: #8b93a3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: var(--ink);
+    background-image: radial-gradient(ellipse 80% 60% at 50% -10%, #2e3c55 0%, var(--ink) 65%);
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--paper);
+    padding: 2rem 1rem 4rem;
+  }
+
+  .marquee {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .marquee::before, .marquee::after { content: "✦"; margin: 0 0.75em; opacity: 0.6; }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .category-header {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--gold-deep);
+  }
+
+  .q {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  }
+  .q .meta {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+  .q .meta a { color: var(--accent); text-decoration: none; }
+  .q .meta a:hover { text-decoration: underline; }
+  .q .text { font-size: 1.05rem; margin-bottom: 0.5rem; white-space: pre-line; }
+  .q .choices-list {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.9rem;
+    margin: 0.25rem 0 0.5rem 1.25rem;
+  }
+  .q .answer {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: var(--gold-deep);
+  }
+  .q .answer::before { content: "Answer: "; color: var(--ink-soft); }
+  .q .notes {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+  .q img { max-width: 240px; border-radius: 6px; margin: 0.25rem 0 0.5rem; display: block; }
+
+  .error {
+    text-align: center;
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    color: var(--gold);
+    margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+  <div class="marquee">Host Answer Key</div>
+  <div class="wrap" id="list"></div>
+
+<script>
+  const listEl = document.getElementById("list");
+
+  fetch("../trivia-answers.json")
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then((data) => {
+      data.questions.forEach((q) => {
+        if (q.divider) {
+          const h = document.createElement("div");
+          h.className = "category-header";
+          h.textContent = `${q.category} (${q.id})`;
+          listEl.appendChild(h);
+          return;
+        }
+
+        const card = document.createElement("div");
+        card.className = "q";
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        const link = document.createElement("a");
+        link.href = `../trivia-night.html#q${q.id}`;
+        link.textContent = `#q${q.id}`;
+        meta.appendChild(link);
+        meta.appendChild(document.createTextNode(
+          ` • ${q.type || "short-answer"} • ${q.points ?? 10} pts` +
+          (q.timeLimit ? ` • ${q.timeLimit}s timer` : "") +
+          (q.reveal ? " • reveal" : "")
+        ));
+        card.appendChild(meta);
+
+        const text = document.createElement("div");
+        text.className = "text";
+        text.textContent = q.text;
+        card.appendChild(text);
+
+        if (q.image) {
+          const img = document.createElement("img");
+          img.src = "../" + q.image;
+          img.alt = "";
+          card.appendChild(img);
+        }
+
+        if (q.chat && q.chat.messages) {
+          const chat = document.createElement("div");
+          chat.className = "notes";
+          chat.textContent = q.chat.messages.map((m) => `[${m.from}] ${m.text}`).join("  |  ");
+          card.appendChild(chat);
+        }
+
+        if (q.choices && q.choices.length) {
+          const ol = document.createElement("ol");
+          ol.className = "choices-list";
+          ol.type = "A";
+          q.choices.forEach((c) => {
+            const li = document.createElement("li");
+            li.textContent = c;
+            ol.appendChild(li);
+          });
+          card.appendChild(ol);
+        }
+
+        const ans = document.createElement("div");
+        ans.className = "answer";
+        ans.textContent = q.answer;
+        card.appendChild(ans);
+
+        if (q.notes) {
+          const notes = document.createElement("div");
+          notes.className = "notes";
+          notes.textContent = q.notes;
+          card.appendChild(notes);
+        }
+
+        listEl.appendChild(card);
+      });
+    })
+    .catch((err) => {
+      listEl.innerHTML = `<div class="error">Couldn't load trivia-answers.json (${err.message}).<br>If opened as a local file, run a local server instead — fetch() is blocked on file://.</div>`;
+    });
+</script>
+</body>
+</html>

@@ -14,7 +14,115 @@
       "notes": "Warm-up question — used to explain the rules and question-distribution criteria."
     },
     {
-      "id": 2,
+      "id": 200,
+      "divider": true,
+      "category": "Who Said This?",
+      "notes": "Category-break slide — shows only the category name and a \"Start Category\" button."
+    },
+    {
+      "id": 201,
+      "text": "Do you ever feel like a computer and you just need to restart?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "David",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 202,
+      "text": "As the temptation to worry begins to surface, I once again remind myself of how all our needs have been met from the first day my papa had come live with us",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Mom",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small"
+    },
+    {
+      "id": 203,
+      "text": "This is she",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Dad",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 204,
+      "text": "Should you feel an urge too strong... saran wrap your entire torso from your knees up into your nips in addition to any standard protection you normally use.",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Philip",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small"
+    },
+    {
+      "id": 205,
+      "text": "And so the lion fell in love with the lamb.",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Edward Cullen, Twilight",
+      "timeLimit": null,
+      "points": 10,
+      "notes": "The most iconic Twilight line — Edward to Bella in the meadow scene."
+    },
+    {
+      "id": 206,
+      "text": "What a surprise that a woman started drama lol",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "David",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 300,
+      "divider": true,
+      "category": "Movie/TV Quotes",
+      "notes": "Category-break slide — shows only the category name and a \"Start Category\" button."
+    },
+    {
+      "id": 301,
+      "text": "I will eviscerate you in fiction. Every pimple, every character flaw. I was naked for a day; you will be naked for eternity.",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Chaucer, A Knight's Tale",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small"
+    },
+    {
+      "id": 302,
+      "text": "Biscuits and Gravey!",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Bluey",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 303,
+      "text": "Give me one reason — one good reason — why we should spend our last two hours in Florida looking at the sisters of Freckle-Face Haynes, the Dog-Faced Boy.",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Phil Davis, White Christmas",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small"
+    },
+    {
+      "id": 304,
+      "text": "\"Upset? I'm house broken.\"\n\"Not house broken. He means heart broken.\"",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "March of the Wooden Soldiers",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small"
+    },
+    {
+      "id": 4,
       "text": "What is Bandit Heeler's middle name?",
       "type": "short-answer",
       "choices": [],
@@ -23,7 +131,7 @@
       "points": 10
     },
     {
-      "id": 3,
+      "id": 5,
       "text": "Who's most likely sending this exchange in the family chat?",
       "type": "short-answer",
       "choices": [],
@@ -39,7 +147,7 @@
       }
     },
     {
-      "id": 4,
+      "id": 6,
       "text": "Which player did not play in the 2000 Subway Series?",
       "type": "multiple-choice",
       "choices": [
@@ -56,7 +164,7 @@
       "notes": "Mussina was on the Baltimore Orioles in 2000; he signed with the Yankees in December 2000 and pitched in the 2001 World Series."
     },
     {
-      "id": 5,
+      "id": 7,
       "text": "DeMarini, Easton, Kraken, Lizard Skins — these are all companies that sell what?",
       "type": "short-answer",
       "choices": [],
@@ -66,7 +174,7 @@
       "notes": "DeMarini and Easton make bats; Kraken sells bats; Lizard Skins is best known for bat grip tape — accept 'softball bats', 'bats', or 'softball equipment'."
     },
     {
-      "id": 6,
+      "id": 8,
       "text": "How many cousins are older than Sophia?",
       "type": "short-answer",
       "category": "Cousins",
@@ -78,7 +186,28 @@
       "notes": "Hidden behind a Start button; the 10s timer begins when the host reveals the question."
     },
     {
-      "id": 7,
+      "id": 400,
+      "divider": true,
+      "category": "Professions",
+      "notes": "Category-break slide — shows only the category name and a \"Start Category\" button."
+    },
+    {
+      "id": 401,
+      "text": "Which of these is not an LLM?",
+      "type": "multiple-choice",
+      "choices": [
+        "Claude",
+        "Gemini",
+        "Llama",
+        "Perplexity"
+      ],
+      "answer": "Perplexity",
+      "timeLimit": null,
+      "points": 10,
+      "notes": "Claude, Gemini, and Llama are large language models; Perplexity is an AI search/answer engine, not an LLM itself."
+    },
+    {
+      "id": 402,
       "text": "Jalousie, Casement, Awning, Double-hung — these are all a type of what?",
       "type": "short-answer",
       "choices": [],
@@ -87,7 +216,7 @@
       "points": 10
     },
     {
-      "id": 8,
+      "id": 403,
       "text": "What profession uses classifiers and role shifting?",
       "type": "short-answer",
       "choices": [],
@@ -95,6 +224,98 @@
       "timeLimit": null,
       "points": 10,
       "notes": "Classifiers and role shifting are ASL grammatical/storytelling techniques — accept 'sign language interpreter', 'ASL interpreter', or 'signer'."
+    },
+    {
+      "id": 404,
+      "text": "What is the normal human body temperature in degrees Fahrenheit?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "98.6°F",
+      "timeLimit": null,
+      "points": 10,
+      "notes": "Accept 98.6°F (37°C), or a reasonable range around it (97–99°F)."
+    },
+    {
+      "id": 405,
+      "text": "In a blood pressure reading like 120 over 80, what does the top number measure?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Systolic pressure — the pressure when the heart beats/contracts",
+      "timeLimit": null,
+      "points": 10,
+      "notes": "Accept 'systolic' or a description like 'pressure when the heart squeezes/beats'. Bottom number is diastolic (heart at rest)."
+    },
+    {
+      "id": 406,
+      "text": "What does VPN stand for?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Virtual Private Network",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 407,
+      "text": "In real estate, what does MLS stand for?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Multiple Listing Service",
+      "timeLimit": null,
+      "points": 10,
+      "notes": "Not Major League Soccer — the database agents use to list homes for sale."
+    },
+    {
+      "id": 500,
+      "divider": true,
+      "category": "Past Holidays",
+      "notes": "Category-break slide — shows only the category name and a \"Start Category\" button."
+    },
+    {
+      "id": 501,
+      "text": "What 2 knuckleheads ruined the reading of the Christmas story with a fart prank?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Jonny and Samuel",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 502,
+      "text": "What is the most expensive gift anyone has received, and who gave it?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "A Onewheel, from David",
+      "timeLimit": null,
+      "points": 10
+    },
+    {
+      "id": 600,
+      "divider": true,
+      "category": "Random",
+      "notes": "Category-break slide — shows only the category name and a \"Start Category\" button."
+    },
+    {
+      "id": 601,
+      "text": "How many houses are between this house and Dad and Mom's house?",
+      "type": "short-answer",
+      "choices": [],
+      "image": "images/house.png",
+      "answer": "1",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small",
+      "notes": "Image question — Google Street View shot of the house at images/house.png."
+    },
+    {
+      "id": 602,
+      "text": "What was the name of David's son who got his hair caught in a tree and was killed on Joab's command?",
+      "type": "short-answer",
+      "choices": [],
+      "answer": "Absalom",
+      "timeLimit": null,
+      "points": 10,
+      "textSize": "small",
+      "notes": "2 Samuel 18 — Absalom's hair/head caught in an oak while riding a mule; Joab struck him down despite David's order to spare him."
     }
   ]
 }

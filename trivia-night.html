@@ -82,6 +82,7 @@
     font-weight: bold;
     margin-bottom: 1.5rem;
     min-height: 1.2em;
+    white-space: pre-line;
   }
 
   .choices {
@@ -149,6 +150,16 @@
     line-height: 1;
     padding: 10px 14px;
   }
+  .photo {
+    display: none;
+    max-width: 100%;
+    max-height: 45vh;
+    margin: 0 auto 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  .photo.visible { display: block; }
+
   .choice {
     font-size: 1.1rem;
     padding: 0.6em 1em;
@@ -193,6 +204,8 @@
     <div class="question" id="question"></div>
     <div class="category" id="category"></div>
     <div class="chat" id="chat"></div>
+    <img class="photo" id="photo" alt="">
+
     <div class="choices" id="choices"></div>
     <button class="next-btn" id="startBtn" style="display: none;">Start</button>
     <button class="next-btn" id="nextBtn">Next Question</button>
@@ -203,6 +216,10 @@
   // QUESTION SET — edit this array only. Everything else adapts.
   //
   // Each question is an object:
+  //   id         (number, required)  stable identifier used in the URL
+  //              hash (#q<id>); must be unique. Categorized questions use
+  //              a <category-id>xx scheme (e.g. 200 = divider, 201-299 =
+  //              its questions); everything else keeps its original id.
   //   text       (string, required)  the question as displayed
   //   type       ("short-answer" | "multiple-choice" | "true-false")
   //              defaults to "short-answer" if omitted
@@ -221,12 +238,22 @@
   //   chat       ({title, messages: [{from: "them"|"me",
   //              text, bigEmoji?}]})  optional iMessage-style mockup
   //              rendered below the question text
+  //   image      (string)             optional image path/URL shown
+  //              below the question text
+  //   divider    (boolean)           category-break slide — shows only
+  //              the category name and a Next button; all other fields
+  //              on this object are ignored except `category`
+  //   textSize   ("small" | "medium" | "large")  overrides the question
+  //              font size; use "small" for long/wordy text. Defaults to
+  //              "large", or "medium" when a chat mockup or choices share
+  //              the card.
   //
   // This array is mirrored in trivia-answers.json for the admin view.
   // Keep the two in sync when you add/edit/remove questions.
   // ------------------------------------------------------------
   const questions = [
     {
+      id: 1,
       text: "1 + 1",
       type: "short-answer",
       answer: "2",
@@ -234,13 +261,102 @@
       points: 0
     },
     {
-      text: "What is Bandit Heeler's middle name?",
+      id: 200,
+      divider: true,
+      category: "Who Said This?"
+    },
+    {
+      id: 201,
+      text: "Do you ever feel like a computer and you just need to restart?",
       type: "short-answer",
-      answer: "Custard",
+      answer: "David",
       timeLimit: null,
       points: 10
     },
     {
+      id: 202,
+      text: "As the temptation to worry begins to surface, I once again remind myself of how all our needs have been met from the first day my papa had come live with us",
+      type: "short-answer",
+      answer: "Mom",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
+    {
+      id: 203,
+      text: "This is she",
+      type: "short-answer",
+      answer: "Dad",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 204,
+      text: "Should you feel an urge too strong... saran wrap your entire torso from your knees up into your nips in addition to any standard protection you normally use.",
+      type: "short-answer",
+      answer: "Philip",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
+    {
+      id: 205,
+      text: "And so the lion fell in love with the lamb.",
+      type: "short-answer",
+      answer: "Edward Cullen, Twilight",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 206,
+      text: "What a surprise that a woman started drama lol",
+      type: "short-answer",
+      answer: "David",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 300,
+      divider: true,
+      category: "Movie/TV Quotes"
+    },
+    {
+      id: 301,
+      text: "I will eviscerate you in fiction. Every pimple, every character flaw. I was naked for a day; you will be naked for eternity.",
+      type: "short-answer",
+      answer: "Chaucer, A Knight's Tale",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
+    {
+      id: 302,
+      text: "Biscuits and Gravey!",
+      type: "short-answer",
+      answer: "Bluey",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 303,
+      text: "Give me one reason — one good reason — why we should spend our last two hours in Florida looking at the sisters of Freckle-Face Haynes, the Dog-Faced Boy.",
+      type: "short-answer",
+      answer: "Phil Davis, White Christmas",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
+    {
+      id: 304,
+      text: "\"Upset? I'm house broken.\"\n\"Not house broken. He means heart broken.\"",
+      type: "short-answer",
+      answer: "March of the Wooden Soldiers",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
+    {
+      id: 5,
       text: "Who's most likely sending this exchange in the family chat?",
       type: "short-answer",
       answer: "David and Victoria",
@@ -255,6 +371,7 @@
       }
     },
     {
+      id: 6,
       text: "Which player did not play in the 2000 Subway Series?",
       type: "multiple-choice",
       choices: [
@@ -270,6 +387,7 @@
       points: 10
     },
     {
+      id: 7,
       text: "DeMarini, Easton, Kraken, Lizard Skins — these are all companies that sell what?",
       type: "short-answer",
       answer: "Softball bats (and gear)",
@@ -277,6 +395,7 @@
       points: 10
     },
     {
+      id: 8,
       text: "How many cousins are older than Sophia?",
       type: "short-answer",
       category: "Cousins",
@@ -286,6 +405,26 @@
       reveal: true
     },
     {
+      id: 400,
+      divider: true,
+      category: "Professions"
+    },
+    {
+      id: 401,
+      text: "Which of these is not an LLM?",
+      type: "multiple-choice",
+      choices: [
+        "Claude",
+        "Gemini",
+        "Llama",
+        "Perplexity",
+      ],
+      answer: "Perplexity",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 402,
       text: "Jalousie, Casement, Awning, Double-hung — these are all a type of what?",
       type: "short-answer",
       answer: "Windows",
@@ -293,28 +432,112 @@
       points: 10
     },
     {
+      id: 403,
       text: "What profession uses classifiers and role shifting?",
       type: "short-answer",
       answer: "Sign language interpreter",
       timeLimit: null,
       points: 10
     },
+    {
+      id: 404,
+      text: "What is the normal human body temperature in degrees Fahrenheit?",
+      type: "short-answer",
+      answer: "98.6°F",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 405,
+      text: "In a blood pressure reading like 120 over 80, what does the top number measure?",
+      type: "short-answer",
+      answer: "Systolic pressure — the pressure when the heart beats/contracts",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 406,
+      text: "What does VPN stand for?",
+      type: "short-answer",
+      answer: "Virtual Private Network",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 407,
+      text: "In real estate, what does MLS stand for?",
+      type: "short-answer",
+      answer: "Multiple Listing Service",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 500,
+      divider: true,
+      category: "Past Holidays"
+    },
+    {
+      id: 501,
+      text: "What 2 knuckleheads ruined the reading of the Christmas story with a fart prank?",
+      type: "short-answer",
+      answer: "Jonny and Samuel",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 502,
+      text: "What is the most expensive gift anyone has received, and who gave it?",
+      type: "short-answer",
+      answer: "A Onewheel, from David",
+      timeLimit: null,
+      points: 10
+    },
+    {
+      id: 600,
+      divider: true,
+      category: "Random"
+    },
+    {
+      id: 601,
+      text: "How many houses are between this house and Dad and Mom's house?",
+      type: "short-answer",
+      image: "images/house.png",
+      answer: "1",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
+    {
+      id: 602,
+      text: "What was the name of David's son who got his hair caught in a tree and was killed on Joab's command?",
+      type: "short-answer",
+      answer: "Absalom",
+      timeLimit: null,
+      points: 10,
+      textSize: "small"
+    },
   ];
+
+  const TEXT_SIZES = {
+    small:  "clamp(1.5rem, 4vw, 3rem)",
+    medium: "clamp(1.6rem, 5vw, 3.5rem)",
+    large:  "clamp(2.5rem, 8vw, 4rem)",
+  };
 
   const counterEl  = document.getElementById("counter");
   const questionEl = document.getElementById("question");
   const categoryEl = document.getElementById("category");
   const chatEl     = document.getElementById("chat");
+  const photoEl    = document.getElementById("photo");
   const choicesEl  = document.getElementById("choices");
   const timerEl    = document.getElementById("timer");
   const startBtn   = document.getElementById("startBtn");
   const nextBtn    = document.getElementById("nextBtn");
 
-  // survive an accidental refresh via URL hash (#q2 etc.)
-  let index = Math.min(
-    Math.max(parseInt(location.hash.replace("#q", ""), 10) - 1 || 0, 0),
-    questions.length - 1
-  );
+  // survive an accidental refresh via URL hash (#q<id> etc.)
+  const hashId = parseInt(location.hash.replace("#q", ""), 10);
+  const hashIndex = questions.findIndex((q) => q.id === hashId);
+  let index = hashIndex >= 0 ? hashIndex : 0;
 
   let timerId = null;
 
@@ -342,6 +565,24 @@
   function render() {
     stopTimer();
     const q = questions[index];
+
+    if (q.divider) {
+      counterEl.textContent = "";
+      startBtn.style.display = "none";
+      nextBtn.style.display = "";
+      questionEl.textContent = q.category;
+      questionEl.style.fontSize = "";
+      categoryEl.classList.remove("visible");
+      chatEl.classList.remove("visible");
+      photoEl.classList.remove("visible");
+      choicesEl.classList.remove("visible");
+      choicesEl.innerHTML = "";
+      location.hash = "q" + q.id;
+      nextBtn.textContent = "Start Category";
+      nextBtn.disabled = false;
+      return;
+    }
+
     const hidden = q.reveal && !revealed;
 
     counterEl.textContent = `Question ${index + 1} of ${questions.length}`;
@@ -358,14 +599,23 @@
         categoryEl.classList.remove("visible");
       }
       chatEl.classList.remove("visible");
+      photoEl.classList.remove("visible");
       choicesEl.classList.remove("visible");
       choicesEl.innerHTML = "";
-      location.hash = "q" + (index + 1);
+      location.hash = "q" + q.id;
       return;
     }
 
     questionEl.textContent = q.text;
     categoryEl.classList.remove("visible");
+
+    if (q.image) {
+      photoEl.src = q.image;
+      photoEl.classList.add("visible");
+    } else {
+      photoEl.classList.remove("visible");
+      photoEl.removeAttribute("src");
+    }
 
     chatEl.innerHTML = "";
     if (q.chat) {
@@ -386,9 +636,11 @@
       chatEl.classList.remove("visible");
     }
 
-    // shrink the question when extra content (chat mockup, choices) shares the card
-    const hasExtras = !!q.chat || q.type === "multiple-choice" || q.type === "true-false";
-    questionEl.style.fontSize = hasExtras ? "clamp(1.6rem, 5vw, 2.5rem)" : "";
+    // shrink the question when extra content (chat mockup, choices) shares the card,
+    // or when a question explicitly requests a smaller size (e.g. a long quote)
+    const hasExtras = !!q.chat || !!q.image || q.type === "multiple-choice" || q.type === "true-false";
+    const textSize = q.textSize || (hasExtras ? "medium" : "large");
+    questionEl.style.fontSize = TEXT_SIZES[textSize] || "";
 
     if (q.type === "multiple-choice" || q.type === "true-false") {
       const choices = q.choices && q.choices.length ? q.choices : ["True", "False"];
@@ -407,7 +659,7 @@
 
     if (q.timeLimit) startTimer(q.timeLimit);
 
-    location.hash = "q" + (index + 1);
+    location.hash = "q" + q.id;
     if (index === questions.length - 1) {
       nextBtn.textContent = "That's the game!";
       nextBtn.disabled = true;
