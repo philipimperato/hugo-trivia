@@ -122,15 +122,6 @@
       "textSize": "small"
     },
     {
-      "id": 4,
-      "text": "What is Bandit Heeler's middle name?",
-      "type": "short-answer",
-      "choices": [],
-      "answer": "Custard",
-      "timeLimit": null,
-      "points": 10
-    },
-    {
       "id": 5,
       "text": "Who's most likely sending this exchange in the family chat?",
       "type": "short-answer",
